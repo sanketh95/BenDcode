@@ -2,19 +2,20 @@ from .exceptions import *
 
 def encode(ps, fail_silently=True):
 	try:
-		if isinstance(ps, basestring):
+		if isinstance(ps, str):
 			return ''.join([str(len(ps)), ':', ps])
 		if isinstance(ps, int):
-			return ''.join(['i'+str(ps)+'e'])
+			return ''.join(['i',str(ps),'e'])
 		if isinstance(ps, list):
 			return 'l'+''.join([encode(i) for i in ps]) + 'e'
 		if isinstance(ps, dict):
 			for key, value in ps.items():
-				if not isinstance(key, basestring):
+				if not isinstance(key, str):
 					raise MalformedBencodeError()
 			return 'd'+''.join([encode(key)+encode(value) for key, value in ps.items()])+'e'
 		raise MalformedBencodeError()
 	except Exception:
+		raise
 		if not fail_silently:
 			raise MalformedBencodeError('Failed to encode ' + str(ps))
 		return ''

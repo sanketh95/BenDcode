@@ -25,6 +25,20 @@ The Augmented BNF syntax for Bencoding is given below
 ```
 **Source:** [BTP RFC](http://jonas.nitro.dk/bittorrent/bittorrent-rfc.html)
 
+## Installation
+
+Using pip
+
+`pip install bendcode`
+
+Manual Installation
+
+```
+git clone https://github.com/sanketh95/BenDcode
+cd BenDcode
+python setup.py install
+```
+
 ## Usage
 
 Decoding bencoded data is simple.

@@ -1,15 +1,20 @@
 from .exceptions import *
 
-def encode(ps):
-	if isinstance(ps, basestring):
-		return ''.join([str(len(ps)), ':', ps])
-	if isinstance(ps, int):
-		return ''.join(['i'+str(ps)+'e'])
-	if isinstance(ps, list):
-		return 'l'+''.join([encode(i) for i in ps]) + 'e'
-	if isinstance(ps, dict):
-		return 'd'+''.join([encode(key)+encode(value) for key, value in ps.items()])+'e'
-	return ''
+def encode(ps, fail_silently=True):
+	try:
+		if isinstance(ps, basestring):
+			return ''.join([str(len(ps)), ':', ps])
+		if isinstance(ps, int):
+			return ''.join(['i'+str(ps)+'e'])
+		if isinstance(ps, list):
+			return 'l'+''.join([encode(i) for i in ps]) + 'e'
+		if isinstance(ps, dict):
+			return 'd'+''.join([encode(key)+encode(value) for key, value in ps.items()])+'e'
+		raise MalformedBencodeError()
+	except Exception, e:
+		if not fail_silently:
+			raise MalformedBencodeError('Failed to encode ' + str(ps))
+		return ''
 
 def match_string(raw, fail_silently=True):
 	raw_copy = raw
@@ -28,7 +33,7 @@ def match_string(raw, fail_silently=True):
 		return raw[:l], raw[l:]
 	except Exception, e:
 		if not fail_silently:
-			raise MalformedBencodeError()
+			raise MalformedBencodeError('Failed to match string in ' + str(raw))
 		return None, raw_copy
 
 def match_int(raw, fail_silently=True):
@@ -45,7 +50,7 @@ def match_int(raw, fail_silently=True):
 		raise MalformedBencodeError()
 	except Exception, e:
 		if not fail_silently:
-			raise MalformedBencodeError()
+			raise MalformedBencodeError('Failed to match int in ' + str(raw))
 		return None, raw_copy
 
 def match_list(raw, fail_silently=True):
@@ -66,7 +71,7 @@ def match_list(raw, fail_silently=True):
 		return val, raw[1:]
 	except Exception, e:
 		if not fail_silently:
-			raise MalformedBencodeError()
+			raise MalformedBencodeError('Failed to match list in ' + str(raw))
 		return None, raw_copy
 
 def match_dict(raw, fail_silently=True):
@@ -90,17 +95,22 @@ def match_dict(raw, fail_silently=True):
 		return val, raw[1:]
 	except Exception, e:
 		if not fail_silently:
-			raise MalformedBencodeError()
+			raise MalformedBencodeError('Failed match dict in ' + str(raw))
 		return None, raw_copy
 
-def _decode(raw):
-	rvs = [func(raw) for func in match_type_funcs]
-	chosen = [(val, raw) for val, raw in rvs if val is not None]
-	if not chosen:
-		raise MalformedBencodeError()
-	return chosen[0]
+def _decode(raw, fail_silently=True):
+	try:
+		rvs = [func(raw) for func in match_type_funcs]
+		chosen = [(val, raw) for val, raw in rvs if val is not None]
+		if not chosen:
+			raise MalformedBencodeError()
+		return chosen[0]
+	except Exception, e:
+		if not fail_silently:
+			raise MalformedBencodeError('Failed to decode ' + str(raw))
+		return (None, raw)
 
-def decode(raw):
-	return _decode(raw)[0]
+def decode(raw, fail_silently=True):
+	return _decode(raw, fail_silently)[0]
 
 match_type_funcs = [match_list, match_dict, match_string, match_int]

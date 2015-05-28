@@ -91,6 +91,21 @@ or ``False``
         raise MalformedBencodeError('Failed to match string in ' + str(raw))
     bendcode.exceptions.MalformedBencodeError: Failed to match string in abc
 
+Tests
+-----
+
+Run tests using the following code
+
+::
+
+    >>> from bendcode import tests
+    >>> tests.run_tests()
+    ..................................
+    ----------------------------------------
+    Ran 34 tests in 0.015s
+
+    OK
+
 Issues
 ------
 

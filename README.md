@@ -51,6 +51,8 @@ You can decode invidual types too !
 ({'a': 'b'}, 'i123e')
 ```
 
+**Note:** The match_* series of functions return a tuple `(first_possbile_match, remaining_unmatched_string)`
+
 **Bendcode** can encode too 
 
 ```

@@ -7,7 +7,7 @@ with open(path.join(here, 'README.rst')) as f:
 
 setup(
 	name='bendcode',
-	version='1.0.0',
+	version='1.1.0',
 
 	description='Python module to decode Bencoded data',
 	long_description=long_description,
@@ -18,7 +18,7 @@ setup(
 
 	license='GPLv2',
 
-	keywords=['bencoding', 'bittorrent'],
+	keywords=['bencoding', 'bittorrent', 'decoding', 'encoding'],
 	packages=['bendcode'],
 
 
@@ -26,9 +26,10 @@ setup(
 		'Development Status :: 5 - Production/Stable',
 		'Intended Audience :: Developers',
 		'License :: OSI Approved :: GNU General Public License v2 (GPLv2)',
-		'Programming Language :: Python :: 2',
-        'Programming Language :: Python :: 2.6',
         'Programming Language :: Python :: 2.7',
+        'Programming Language :: Python :: 3.2',
+        'Programming Language :: Python :: 3.3',
+        'Programming Language :: Python :: 3.4',
 	]
 
 )

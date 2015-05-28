@@ -19,7 +19,7 @@ The Augmented BNF syntax for Bencoding is given below
    DIGIT      = "0" / "1" / "2" / "3" / "4" /
                 "5" / "6" / "7" / "8" / "9"
 ```
-**Source: ** [BTP RFC](http://jonas.nitro.dk/bittorrent/bittorrent-rfc.html)
+**Source:** [BTP RFC](http://jonas.nitro.dk/bittorrent/bittorrent-rfc.html)
 
 ## Usage
 
@@ -73,7 +73,7 @@ bendcode.exceptions.MalformedBencodeError
 ({'a': 'b'}, 'i123e')
 ```
 
-**Note: ** The match_* series of functions return a tuple `(first_matched_type_if_possible, remaining_unmatched_string)`
+**Note:** The match_* series of functions return a tuple `(first_matched_type_if_possible, remaining_unmatched_string)`
 
 **Bendcode** can encode too 
 

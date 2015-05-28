@@ -140,5 +140,10 @@ class TestDecoder(unittest.TestCase):
 	def test_negative_int(self):
 		self.assertEqual(match_int('i-123e')[0], -123)
 
+	# Encode dictionary with non string keys
+	def test_encode_dict_non_string_key(self):
+		with self.assertRaises(MalformedBencodeError):
+			encode({123: '123'}, False)
+
 def run_tests():
 	unittest.main(module=__name__)

@@ -9,6 +9,9 @@ def encode(ps, fail_silently=True):
 		if isinstance(ps, list):
 			return 'l'+''.join([encode(i) for i in ps]) + 'e'
 		if isinstance(ps, dict):
+			for key, value in ps.items():
+				if not isinstance(key, basestring):
+					raise MalformedBencodeError()
 			return 'd'+''.join([encode(key)+encode(value) for key, value in ps.items()])+'e'
 		raise MalformedBencodeError()
 	except Exception, e:

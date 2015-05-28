@@ -2,6 +2,9 @@
 
 A python module for decoding bencoded data
 
+[![Code Climate](https://codeclimate.com/repos/5566f91269568069910046e8/badges/ea390c0dd7d6d1b5e688/gpa.svg)](https://codeclimate.com/repos/5566f91269568069910046e8/feed)
+
+
 ## Bencoding
 
 Bencoding is a meta data representation format fot the BitTorrent Protocol (BTP). 

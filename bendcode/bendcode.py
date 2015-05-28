@@ -41,12 +41,12 @@ def match_int(raw, fail_silently=True):
 	try:
 		if raw == '' or raw[0] != 'i':
 			raise MalformedBencodeError()
-		raw, val = raw[1:], 0
+		raw, val = raw[1:], ''
 		for i, r in enumerate(raw):
 			if r == 'e':
-				return val, raw[i+1:]
+				return (0 if val == '' else int(val)), raw[i+1:]
 			else:
-				val = (val*10) + int(r)
+				val = val + r
 		raise MalformedBencodeError()
 	except Exception, e:
 		if not fail_silently:

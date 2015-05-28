@@ -136,5 +136,9 @@ class TestDecoder(unittest.TestCase):
 		with self.assertRaises(MalformedBencodeError):
 			decode('rai', False)
 
+	# Negative Number
+	def test_negative_int(self):
+		self.assertEqual(match_int('i-123e')[0], -123)
+
 def run_tests():
 	unittest.main(module=__name__)

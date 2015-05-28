@@ -1,5 +1,5 @@
 *.py[cod]
 
 dist/
-coursera_offline.egg-info/
+bendcode.egg-info/
 build/

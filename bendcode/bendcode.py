@@ -52,7 +52,7 @@ def match_list(raw, fail_silently=True):
 		raw, val = raw[1:], []
 		while raw != '' and raw[0] != 'e':
 			rvs = [func(raw) for func in match_type_funcs]
-			chosen = [(v, raw) for v,raw in rvs if v]
+			chosen = [(v, raw) for v,raw in rvs if v is not None]
 			if not chosen:
 				raise MalformedBencodeError()
 			val.append(chosen[0][0])
@@ -76,7 +76,7 @@ def match_dict(raw, fail_silently=True):
 			if not key:
 				raise MalformedBencodeError()
 			rvs = [func(raw) for func in match_type_funcs]
-			chosen = [(v, raw) for v, raw in rvs if v]
+			chosen = [(v, raw) for v, raw in rvs if v is not None]
 			if not chosen:
 				raise MalformedBencodeError()
 			val[key] = chosen[0][0]
@@ -91,7 +91,7 @@ def match_dict(raw, fail_silently=True):
 
 def _decode(raw):
 	rvs = [func(raw) for func in match_type_funcs]
-	chosen = [(val, raw) for val, raw in rvs if val]
+	chosen = [(val, raw) for val, raw in rvs if val is not None]
 	if not chosen:
 		raise MalformedBencodeError()
 	return chosen[0]

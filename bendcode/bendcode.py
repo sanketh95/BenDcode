@@ -9,18 +9,22 @@ def encode(ps):
 		return 'l'+''.join([encode(i) for i in ps]) + 'e'
 	if isinstance(ps, dict):
 		return 'd'+''.join([encode(key)+encode(value) for key, value in ps.items()])+'e'
+	return ''
 
 def match_string(raw, fail_silently=True):
 	raw_copy = raw
 	try:
 		if raw == '':
 			raise MalformedBencodeError()
+		int(raw[0])
 		l = 0
 		for i, r in enumerate(raw):
 			if r == ':':
 				raw = raw[i+1:]
 				break
 			l = (l * 10) + int(r)
+		if (len(raw) < l):
+			raise MalformedBencodeError()
 		return raw[:l], raw[l:]
 	except Exception, e:
 		if not fail_silently:

@@ -37,34 +37,12 @@ Decoding bencoded data is simple.
 {'a': 123, 'b': 234}
 ```
 
-Malformed bencoded strings can be handled in two ways.
-By raising `bendcode.MalformedBencodeError` or by returning `None` and failing silently.
-
-```
->>> import bendcode
->>> bendcode.decode('123', fail_silently=False)
-Traceback (most recent call last):
-  File "<stdin>", line 1, in <module>
-  File "bendcode\bendcode.py", line 114, in decode
-    return _decode(raw, fail_silently)[0]
-  File "bendcode\bendcode.py", line 110, in _decode
-    raise MalformedBencodeError('Failed to decode ' + str(raw))
-bendcode.exceptions.MalformedBencodeError
->>> bendcode.decode('123')
-```
-
-You can decode invidual types too ! You can fail silently or raise `bendcode.MalformedBencodeError`
+You can decode invidual types too !
 
 ```
 >>> import bendcode
 >>> bendcode.match_string('3:abc')
 ('abc', '')
->>> bendcode.match_int('3:abc', fail_silently=False)
-Traceback (most recent call last):
-  File "<stdin>", line 1, in <module>
-  File "bendcode\bendcode.py", line 53, in match_int
-    raise MalformedBencodeError('Failed to match int in ' + str(raw))
-bendcode.exceptions.MalformedBencodeError
 >>> bendcode.match_int('i-123e')
 (-123, '')
 >>> bendcode.match_list('li123ee')
@@ -72,8 +50,6 @@ bendcode.exceptions.MalformedBencodeError
 >>> bendcode.match_dict('d1:a1:bei123e')
 ({'a': 'b'}, 'i123e')
 ```
-
-**Note:** The match_* series of functions return a tuple `(first_matched_type_if_possible, remaining_unmatched_string)`
 
 **Bendcode** can encode too 
 
@@ -89,23 +65,21 @@ bendcode.exceptions.MalformedBencodeError
 'd5:helloi123ee'
 >>> bendcode.encode(None)
 ''
->>> bendcode.encode(None, fail_silently=False)
-Traceback (most recent call last):
-  File "<stdin>", line 1, in <module>
-  File "bendcode\bendcode.py", line 16, in encode
-    raise MalformedBencodeError('Failed to encode ' + str(ps))
-bendcode.exceptions.MalformedBencodeError
->>> bendcode.encode({123: 123})
-''
->>> bendcode.encode({123: 123}, fail_silently=False)
-Traceback (most recent call last):
-  File "<stdin>", line 1, in <module>
-  File "bendcode\bendcode.py", line 19, in encode
-    raise MalformedBencodeError('Failed to encode ' + str(ps))
-bendcode.exceptions.MalformedBencodeError
 ```
 
-You decide whether to raise an exception or not for any functions by setting the `fail_silently` parameter to `True` or `False`
+You decide whether to raise an exception or not for any functions mentioned above by setting the `fail_silently` parameter to `True` or `False`
+
+```
+>>> import bendcode
+>>> bendcode.match_string('abc')
+(None, 'abc')
+>>> bendcode.match_string('abc', fail_silently=False)
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+  File "bendcode\bendcode.py", line 39, in match_string
+    raise MalformedBencodeError('Failed to match string in ' + str(raw))
+bendcode.exceptions.MalformedBencodeError: Failed to match string in abc
+```
 
 ## Issues
 

@@ -8,3 +8,5 @@ python:
   - "nightly"
 # command to install dependencies
 install: "pip install ."
+# command to run tests
+script: run_tests
